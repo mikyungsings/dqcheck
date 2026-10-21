@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dqcheck"
+version = "0.1.0"
+description = "A small, dependency-light library and CLI for checking common data quality issues in tabular data."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Mi Kyung Song" }]
+dependencies = [
+    "pandas>=1.5",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]
+
+[project.scripts]
+dqcheck = "dqcheck.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["dqcheck*"]
