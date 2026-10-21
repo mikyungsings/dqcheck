@@ -59,3 +59,11 @@ def test_run_all_checks_returns_combined_report():
     assert "duplicate_rows" in report
     assert "type_consistency" in report
     assert "outliers" in report
+
+
+def test_constant_column_report_flags_single_value_columns():
+    from dqcheck.checks import constant_column_report
+    df = pd.DataFrame({"a": [1, 2, 3], "b": [5, 5, 5]})
+    report = constant_column_report(df)
+    assert "b" in report
+    assert "a" not in report

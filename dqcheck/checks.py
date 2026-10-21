@@ -95,6 +95,20 @@ def outlier_report(df: pd.DataFrame, columns: list[str] | None = None) -> dict:
     return report
 
 
+def constant_column_report(df: pd.DataFrame) -> dict:
+    """Flag columns where every non-null value is identical.
+
+    A column that never changes is often a sign something upstream broke
+    (a sensor stuck on one reading, a default value nobody overwrote).
+    """
+    report = {}
+    for column in df.columns:
+        non_null = df[column].dropna()
+        if len(non_null) > 0 and non_null.nunique() == 1:
+            report[column] = {"constant_value": non_null.iloc[0]}
+    return report
+
+
 def run_all_checks(df: pd.DataFrame, expected_types: dict | None = None) -> dict:
     """Run every check and return one combined report."""
     return {
@@ -104,4 +118,5 @@ def run_all_checks(df: pd.DataFrame, expected_types: dict | None = None) -> dict
         "duplicate_rows": duplicate_row_report(df),
         "type_consistency": type_consistency_report(df, expected_types=expected_types),
         "outliers": outlier_report(df),
+        "constant_columns": constant_column_report(df),
     }

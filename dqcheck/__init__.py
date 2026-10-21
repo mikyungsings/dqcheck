@@ -5,6 +5,7 @@ from .checks import (
     duplicate_row_report,
     type_consistency_report,
     outlier_report,
+    constant_column_report,
     run_all_checks,
 )
 
@@ -15,5 +16,6 @@ __all__ = [
     "duplicate_row_report",
     "type_consistency_report",
     "outlier_report",
+    "constant_column_report",
     "run_all_checks",
 ]
